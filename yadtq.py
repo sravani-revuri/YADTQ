@@ -1,57 +1,103 @@
 import json
 import uuid
 import redis
+import time
+import signal
+import sys
 from kafka import KafkaProducer
 
-# Kafka and Redis Configuration
-KAFKA_BROKER = "localhost:9092"
-KAFKA_TOPIC = "task_queue"
-REDIS_HOST = "localhost"
-REDIS_PORT = 6379
+class YADTQ():
+    def __init__(self, kafka_broker, redis_host, redis_port):
+        self.kafka_topic = "task_queue"
+        self.redis_client = redis.Redis(host=redis_host, port=redis_port, decode_responses=True)
+        self.producer = KafkaProducer(
+            bootstrap_servers=kafka_broker,
+            value_serializer=lambda v: json.dumps(v).encode("utf-8"),
+        )
 
-# Initialize Redis
-redis_client = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, decode_responses=True)
+    def submit_task(self, task_type, args):
+        task_id = str(uuid.uuid4())
+        task_data = {
+            "id": task_id,
+            "type": task_type,
+            "arguments": args  
+        }
 
-# Kafka Producer
-producer = KafkaProducer(
-    bootstrap_servers=KAFKA_BROKER,
-    value_serializer=lambda v: json.dumps(v).encode("utf-8"),
-)
+        # Set initial task status in Redis
+        self.redis_client.set(task_id, json.dumps({"status": "queued"}))
 
+        try:
+            # Send task to Kafka and wait for confirmation
+            future = self.producer.send(self.kafka_topic, task_data)
+            future.get(timeout=10)  # Blocks until Kafka confirms delivery
+            self.producer.flush()   # Ensure the message is sent
 
-def submit_task(task_type, args):
-    """Submit a task to Kafka and track it in Redis."""
-    task_id = str(uuid.uuid4())
-    task_data = {"task-id": task_id, "task": task_type, "args": args}
+            print(f" Task {task_id} sent to Kafka with queued status")
+        except Exception as e:
+            print(f" Error submitting Task {task_id} to Kafka: {str(e)}")
+            self.redis_client.set(task_id, json.dumps({"status": "failed"}))
+            return None
 
-    # Store initial task status in Redis
-    redis_client.set(task_id, json.dumps({"status": "queued"}))
+        return task_id
+
+    def get_status(self, task_id):
+        task_info = self.redis_client.get(task_id)
+        return json.loads(task_info) if task_info else {"error": "Task ID not found"}
+
+    def close(self):
+        """Closes Kafka producer and Redis connection."""
+        print("\n Closing Kafka producer and Redis connection...")
+        self.producer.close()
+        print(" Resources released. Exiting safely.")
+
+def graceful_exit(signum, frame):
+    """Handle shutdown signals (`SIGINT`, `SIGTERM`) gracefully."""
+    print("\n Graceful shutdown detected. Exiting...")
+    task_manager.close()
+    sys.exit(0)
+
+def main():
+    global task_manager
+    task_manager = YADTQ(kafka_broker="localhost:9092", redis_host="localhost", redis_port=6379)
+
+    # Register signal handlers for graceful shutdown
+    signal.signal(signal.SIGINT, graceful_exit)
+    signal.signal(signal.SIGTERM, graceful_exit)
 
     try:
-        # Send task to Kafka
-        future = producer.send(KAFKA_TOPIC, task_data)
-        producer.flush()  # Ensure the message is sent immediately
+        while True:
+            print("\n Choose an option:")
+            print("1️. Submit a new task")
+            print("2️.  Check task status")
+            print("3️.  Exit")
+            choice = input("Enter choice (1/2/3): ").strip()
 
-        # Confirm the message was successfully sent
-        future.get(timeout=10)  # Raises an error if send fails
-        print(f"✅ Task {task_id} submitted successfully.")
+            if choice == "1":
+                task_type = input("Enter task type (e.g., add): ").strip()
+                args = input("Enter arguments (comma-separated numbers): ").strip()
+                args_list = list(map(int, args.split(",")))
 
-    except Exception as e:
-        print(f"❌ Error submitting task {task_id}: {e}")
+                task_id = task_manager.submit_task(task_type, args_list)
+                if task_id:
+                    print(f" Submitted Task ID: {task_id}")
 
-    return task_id
+            elif choice == "2":
+                task_id = input("Enter Task ID to check status: ").strip()
+                status = task_manager.get_status(task_id)
+                print(f" Task Status: {status}")
 
+            elif choice == "3":
+                print(" Exiting YADTQ...")
+                task_manager.close()
+                break
 
-def get_task_status(task_id):
-    """Retrieve the task status from Redis."""
-    task_info = redis_client.get(task_id)
-    if task_info:
-        return json.loads(task_info)
-    return {"error": "Task ID not found"}
+            else:
+                print("⚠️ Invalid choice! Please select 1, 2, or 3.")
 
+            time.sleep(1)
 
-# Example Usage
+    except KeyboardInterrupt:
+        graceful_exit(None, None)
+
 if __name__ == "__main__":
-    task_id = submit_task("add", [5, 3])
-    print(f"Submitted Task ID: {task_id}")
-    print("Checking status:", get_task_status(task_id))
+    main()
