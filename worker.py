@@ -34,7 +34,7 @@ class Worker:
             print(f" Task {task_id} failed: {str(e)}")
 
     def start(self):
-        print("🚀 Worker started, waiting for tasks...")
+        print(" Worker started, waiting for tasks...")
 
         def shutdown_handler(sig, frame):
             """Handle Ctrl+C (SIGINT) for graceful shutdown."""
