@@ -1,18 +1,21 @@
 import json
 import redis
 import signal
+import time
 import sys
 from kafka import KafkaConsumer
 
 class Worker:
-    def __init__(self, kafka_broker, redis_host, redis_port):
+    def __init__(self, kafka_broker, redis_host, redis_port, worker_id):
         self.kafka_topic = "task_queue"
         self.redis_client = redis.Redis(host=redis_host, port=redis_port, decode_responses=True)
         self.consumer = KafkaConsumer(
             self.kafka_topic,
             bootstrap_servers=kafka_broker,
             value_deserializer=lambda m: json.loads(m.decode("utf-8")),
+            group_id="worker-group"  # Consumer Group for Load Balancing
         )
+        self.worker_id = worker_id
         self.running = True  # Flag to control loop
 
     def process_task(self, task):
@@ -20,30 +23,30 @@ class Worker:
         task_type = task["type"]
         args = task["arguments"]
 
-        self.redis_client.set(task_id, json.dumps({"status": "processing"}))
+        self.redis_client.set(task_id, json.dumps({"status": "processing", "worker": self.worker_id}))
         try:
             if task_type == "add":
+                time.sleep(5)
                 result = sum(args)
-                self.redis_client.set(task_id, json.dumps({"status": "completed", "result": result}))
-                print(f" Task {task_id} completed. Result: {result}")
+                self.redis_client.set(task_id, json.dumps({"status": "completed", "result": result, "worker": self.worker_id}))
+                print(f"[Worker {self.worker_id}] Task {task_id} completed. Result: {result}")
             else:
                 raise ValueError(f"Unsupported task type: {task_type}")
 
         except Exception as e:
-            self.redis_client.set(task_id, json.dumps({"status": "failed", "error": str(e)}))
-            print(f" Task {task_id} failed: {str(e)}")
+            self.redis_client.set(task_id, json.dumps({"status": "failed", "error": str(e), "worker": self.worker_id}))
+            print(f"[Worker {self.worker_id}] Task {task_id} failed: {str(e)}")
 
     def start(self):
-        print(" Worker started, waiting for tasks...")
+        print(f"[Worker {self.worker_id}] Started, waiting for tasks...")
 
         def shutdown_handler(sig, frame):
             """Handle Ctrl+C (SIGINT) for graceful shutdown."""
-            print("\n Received shutdown signal. Stopping worker...")
+            print(f"\n[Worker {self.worker_id}] Received shutdown signal. Stopping...")
             self.running = False
             self.consumer.close()
             sys.exit(0)
 
-        # Register the signal handler
         signal.signal(signal.SIGINT, shutdown_handler)
         signal.signal(signal.SIGTERM, shutdown_handler)
 
@@ -52,9 +55,15 @@ class Worker:
                 if not self.running:
                     break
                 task = message.value
-                print(f" Received task: {task}")
+                print(f"[Worker {self.worker_id}] Received task: {task}")
                 self.process_task(task)
 
 if __name__ == "__main__":
-    worker = Worker(kafka_broker="localhost:9092", redis_host="localhost", redis_port=6379)
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--worker-id", type=str, required=True, help="Unique Worker ID")
+    args = parser.parse_args()
+
+    worker = Worker(kafka_broker="localhost:9092", redis_host="localhost", redis_port=6379, worker_id=args.worker_id)
     worker.start()

@@ -1,6 +1,7 @@
 import json
 import uuid
 import redis
+import random
 from kafka import KafkaProducer
 
 class YADTQ:
@@ -10,6 +11,7 @@ class YADTQ:
         self.producer = KafkaProducer(
             bootstrap_servers=kafka_broker,
             value_serializer=lambda v: json.dumps(v).encode("utf-8"),
+            partitioner=lambda key, all_partitions, available_partitions: random.choice(available_partitions)
         )
 
     def submit_task(self, task_type, args):
@@ -20,15 +22,13 @@ class YADTQ:
             "arguments": args  
         }
 
-        # Set initial task status in Redis
-        self.redis_client.set(task_id, json.dumps({"status": "queued"}))
+        # Set initial task status with TTL (avoids stuck queued tasks)
+        self.redis_client.set(task_id, json.dumps({"status": "queued"}), ex=300)  # 5 min TTL
 
         try:
-            # Send task to Kafka and wait for confirmation
             future = self.producer.send(self.kafka_topic, task_data)
-            future.get(timeout=10)  # Blocks until Kafka confirms delivery
-            self.producer.flush()   # Ensure the message is sent
-
+            future.get(timeout=10)
+            self.producer.flush()
             print(f"Task {task_id} sent to Kafka with queued status")
         except Exception as e:
             print(f"Error submitting Task {task_id} to Kafka: {str(e)}")
@@ -42,7 +42,6 @@ class YADTQ:
         return json.loads(task_info) if task_info else {"error": "Task ID not found"}
 
     def close(self):
-        """Closes Kafka producer and Redis connection."""
         print("\nClosing Kafka producer and Redis connection...")
         self.producer.close()
         print("Resources released. Exiting safely.")
