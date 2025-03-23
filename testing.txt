@@ -35,3 +35,9 @@ sravani@sravani-VirtualBox:~/YADTQ$
 CREATE PARTITIONS:
 /usr/local/kafka/bin/kafka-topics.sh --create --topic task_queue --bootstrap-server localhost:9092 --partitions 3 --replication-factor 1
 /usr/local/kafka/bin/kafka-topics.sh --create --topic heartbeat_queue --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+
+
+DELETING TOPICS:
+sravani@sravani-VirtualBox:~/YADTQ$ /usr/local/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic task_queue
+sravani@sravani-VirtualBox:~/YADTQ$ /usr/local/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic heartbeat_queue
+sravani@sravani-VirtualBox:~/YADTQ$ 
