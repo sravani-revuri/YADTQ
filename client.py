@@ -24,10 +24,13 @@ class Client:
         """Closes the task manager resources."""
         self.task_manager.close()
 
-# Handle graceful exit
+# Create a global `client` variable
+client = Client()
+
 def graceful_exit(signum, frame):
+    """Handles Ctrl+C and termination signals."""
     print("\nGraceful shutdown detected. Exiting...")
-    client.close()
+    client.close()  # Close properly
     sys.exit(0)
 
 # Register signal handlers
@@ -35,8 +38,6 @@ signal.signal(signal.SIGINT, graceful_exit)
 signal.signal(signal.SIGTERM, graceful_exit)
 
 if __name__ == "__main__":
-    client = Client()
-
     while True:
         print("\nClient Menu:")
         print("1. Submit a new task")
@@ -45,7 +46,7 @@ if __name__ == "__main__":
         choice = input("Enter choice (1/2/3): ").strip()
 
         if choice == "1":
-            task_type = input("Enter task type add ,sub ,mul ").strip()
+            task_type = input("Enter task type (add, sub, mul): ").strip()
             args = input("Enter arguments (comma-separated numbers): ").strip()
             try:
                 args_list = list(map(int, args.split(",")))
