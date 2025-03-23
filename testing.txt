@@ -28,3 +28,9 @@ worker-group    task_queue      1          9               9               0    
 worker-group    task_queue      2          6               6               0               kafka-python-2.0.2-fab130d1-5397-47e3-8c92-7a2c75cef54b /127.0.0.1      kafka-python-2.0.2
 worker-group    task_queue      0          12              12              0               kafka-python-2.0.2-20fec070-fede-44c1-afe8-5d73780e4fa0 /127.0.0.1      kafka-python-2.0.2
 sravani@sravani-VirtualBox:~/YADTQ$ 
+
+
+
+
+CREATE PARTITIONS:
+/usr/local/kafka/bin/kafka-topics.sh --alter --topic task_queue --partitions 3 --bootstrap-server localhost:9092
