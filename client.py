@@ -45,7 +45,7 @@ if __name__ == "__main__":
         choice = input("Enter choice (1/2/3): ").strip()
 
         if choice == "1":
-            task_type = input("Enter task type (e.g., add): ").strip()
+            task_type = input("Enter task type add ,sub ,mul ").strip()
             args = input("Enter arguments (comma-separated numbers): ").strip()
             try:
                 args_list = list(map(int, args.split(",")))

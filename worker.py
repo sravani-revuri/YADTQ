@@ -3,6 +3,8 @@ import redis
 import signal
 import time
 import sys
+from functools import reduce
+import math
 from kafka import KafkaConsumer
 
 class Worker:
@@ -15,8 +17,10 @@ class Worker:
             value_deserializer=lambda m: json.loads(m.decode("utf-8")),
             group_id="worker-group"  # Consumer Group for Load Balancing
         )
+    
         self.worker_id = worker_id
         self.running = True  # Flag to control loop
+
 
     def process_task(self, task):
         task_id = task["id"]
@@ -30,12 +34,28 @@ class Worker:
                 result = sum(args)
                 self.redis_client.set(task_id, json.dumps({"status": "completed", "result": result, "worker": self.worker_id}))
                 print(f"[Worker {self.worker_id}] Task {task_id} completed. Result: {result}")
+
+
+            elif task_type == "sub":
+                time.sleep(5)
+                result = reduce(lambda x, y: x - y, args)
+                self.redis_client.set(task_id, json.dumps({"status": "completed", "result": result, "worker": self.worker_id}))
+                print(f"[Worker {self.worker_id}] Task {task_id} completed. Result: {result}")
+
+
+            elif task_type == "mul":
+                time.sleep(5)
+                result=math.prod(args)
+                self.redis_client.set(task_id, json.dumps({"status": "completed", "result": result, "worker": self.worker_id}))
+                print(f"[Worker {self.worker_id}] Task {task_id} completed. Result: {result}")
+
             else:
                 raise ValueError(f"Unsupported task type: {task_type}")
 
         except Exception as e:
             self.redis_client.set(task_id, json.dumps({"status": "failed", "error": str(e), "worker": self.worker_id}))
             print(f"[Worker {self.worker_id}] Task {task_id} failed: {str(e)}")
+
 
     def start(self):
         print(f"[Worker {self.worker_id}] Started, waiting for tasks...")
@@ -57,6 +77,8 @@ class Worker:
                 task = message.value
                 print(f"[Worker {self.worker_id}] Received task: {task}")
                 self.process_task(task)
+
+
 
 if __name__ == "__main__":
     import argparse
