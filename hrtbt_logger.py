@@ -16,7 +16,6 @@ class HrtBtLggr:
         self.running = True  # Flag to control shutdown
 
     def listen_for_heartbeats(self):
-        """Listens for heartbeats and updates worker timestamps."""
         with open("heartbeats.log", "a") as log_file:
             while self.running:
                 for message in self.consumer:
@@ -32,7 +31,6 @@ class HrtBtLggr:
                     self.worker_last_seen[worker_id] = timestamp
 
     def check_unresponsive_workers(self):
-        """Checks for unresponsive workers every 5 seconds."""
         with open("heartbeats.log", "a") as log_file:
             while self.running:
                 time.sleep(5)  # Check every 5 seconds
@@ -44,7 +42,6 @@ class HrtBtLggr:
                         del self.worker_last_seen[worker_id]
 
     def monitor_heartbeats(self):
-        """Starts both heartbeat listener and failure detection in separate threads."""
         self.listener_thread = threading.Thread(target=self.listen_for_heartbeats, daemon=True)
         self.check_thread = threading.Thread(target=self.check_unresponsive_workers, daemon=True)
 
@@ -52,7 +49,6 @@ class HrtBtLggr:
         self.check_thread.start()
 
     def stop(self):
-        """Stops the heartbeat monitoring."""
         self.running = False
         self.consumer.close()
         print("[HeartbeatLogger] Stopped listening for heartbeats.")
