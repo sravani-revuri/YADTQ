@@ -40,10 +40,15 @@ class Worker:
         task_type = task["type"]
         args = task["arguments"]
 
-        self.redis_client.set(task_id, json.dumps({"status": "processing", "worker": self.worker_id}))
+        self.redis_client.set(task_id, json.dumps({
+        "status": "processing",
+        "worker": self.worker_id,
+        "type": task_type,         # Store task type
+        "arguments": args          # Store arguments
+    }))
         try:
             if task_type == "add":
-                time.sleep(1)
+                time.sleep(60)
                 result = sum(args)
                 self.redis_client.set(task_id, json.dumps({"status": "completed", "result": result, "worker": self.worker_id}))
                 print(f"[Worker {self.worker_id}] Task {task_id} completed. Result: {result}")
