@@ -29,12 +29,13 @@ class YADTQ:
             "type": task_type,
             "arguments": args  
         }
-        partition = next(self.partition_cycle)
-        # Set initial task status in Redis with TTL (avoids stuck queued tasks)
+
+    # Set initial task status in Redis with TTL (avoids stuck queued tasks)
         self.redis_client.set(task_id, json.dumps({"status": "queued"}), ex=300)  # 5 min TTL
 
         try:
-            future = self.producer.send(self.kafka_topic, value=task_data, partition=partition)
+            # Let Kafka auto-assign partition
+            future = self.producer.send(self.kafka_topic, value=task_data)
             future.get(timeout=10)
             self.producer.flush()
             print(f"Task {task_id} sent to Kafka with queued status")
@@ -44,6 +45,7 @@ class YADTQ:
             return None
 
         return task_id
+
 
     def get_status(self, task_id):
         task_info = self.redis_client.get(task_id)
