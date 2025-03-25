@@ -32,15 +32,10 @@ class HrtBtLggr:
                     heartbeat = message.value
                     worker_id = heartbeat["worker_id"]
                     timestamp = heartbeat["timestamp"]
-                    current_task = heartbeat.get("current_task", None)  # Get current task if exists
+                    
 
                     log_entry = f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] Worker {worker_id} is alive"
 
-                    if current_task:
-                        task_id = current_task.get("task_id")
-                        task_type = current_task.get("type")
-                        task_args = current_task.get("arguments")
-                        log_entry += f" | Processing Task {task_id}: {task_type} {task_args}"
 
                     log_file.write(log_entry + "\n")
                     log_file.flush()

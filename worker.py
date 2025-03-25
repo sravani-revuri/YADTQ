@@ -27,15 +27,16 @@ class Worker:
 
         self.worker_id = worker_id
         self.running = True  # Flag to control loop
-        self.current_task = None  # Track the current task
+        self.task_queue = [] # Track the current task
 
     def send_heartbeat(self):
         while self.running:
             hrtbt_msg={"worker_id": self.worker_id,
                 "timestamp": time.time(),
-                "current_task": self.current_task}
+                "tasks": self.task_queue.copy()  }
             self.producer.send(self.heartbeat_topic, value=hrtbt_msg)
             self.producer.flush()
+            self.task_queue.clear()
             time.sleep(5)
 
     def process_task(self, task):

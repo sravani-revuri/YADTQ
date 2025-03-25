@@ -5,6 +5,7 @@ import itertools
 import threading
 from hrtbt_logger import HrtBtLggr
 from kafka import KafkaProducer
+from task_logger import TaskLogger
 
 class YADTQ:
     def __init__(self, kafka_broker, redis_host, redis_port, partitions=3):
@@ -22,8 +23,13 @@ class YADTQ:
         self.heartbeat_logger = HrtBtLggr(kafka_broker)
         self.heartbeat_logger.monitor_heartbeats()
 
+        self.task_logger = TaskLogger(kafka_broker)
+        self.task_logger_thread = threading.Thread(target=self.task_logger.log_tasks, daemon=True)
+        self.task_logger_thread.start()
+
     def submit_task(self, task_type, args):
         task_id = str(uuid.uuid4())
+        partition = next(self.partition_cycle)
         task_data = {
             "id": task_id,
             "type": task_type,
@@ -35,7 +41,7 @@ class YADTQ:
 
         try:
             # Let Kafka auto-assign partition
-            future = self.producer.send(self.kafka_topic, value=task_data)
+            future = self.producer.send(self.kafka_topic, value=task_data, partition=partition)
             future.get(timeout=10)
             self.producer.flush()
             print(f"Task {task_id} sent to Kafka with queued status")
@@ -56,4 +62,5 @@ class YADTQ:
         print("\nClosing Kafka producer and Redis connection...")
         self.producer.close()
         self.heartbeat_logger.stop()  # Stop heartbeat logger
+        self.task_logger.stop()
         print("Resources released. Exiting safely.")
