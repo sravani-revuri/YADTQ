@@ -27,10 +27,13 @@ class Worker:
 
         self.worker_id = worker_id
         self.running = True  # Flag to control loop
+        self.current_task = None  # Track the current task
 
     def send_heartbeat(self):
         while self.running:
-            hrtbt_msg={"worker_id":self.worker_id,"timestamp":time.time()}
+            hrtbt_msg={"worker_id": self.worker_id,
+                "timestamp": time.time(),
+                "current_task": self.current_task}
             self.producer.send(self.heartbeat_topic, value=hrtbt_msg)
             self.producer.flush()
             time.sleep(5)
@@ -39,6 +42,8 @@ class Worker:
         task_id = task["id"]
         task_type = task["type"]
         args = task["arguments"]
+
+        self.current_task = {"task_id": task_id, "type": task_type, "arguments": args}  # Store for heartbeat
 
         self.redis_client.set(task_id, json.dumps({
         "status": "processing",
@@ -73,6 +78,9 @@ class Worker:
         except Exception as e:
             self.redis_client.set(task_id, json.dumps({"status": "failed", "error": str(e), "worker": self.worker_id}))
             print(f"[Worker {self.worker_id}] Task {task_id} failed: {str(e)}")
+
+        finally:
+            self.current_task = None
 
 
     def start(self):

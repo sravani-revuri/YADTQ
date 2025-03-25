@@ -1,145 +1,62 @@
-[2025-03-24 17:14:00] Worker 1 is alive
-[2025-03-24 17:14:00] Worker 2 is alive
-[2025-03-24 17:14:00] Worker 1 is alive
-[2025-03-24 17:14:00] Worker 3 is alive
-[2025-03-24 17:14:00] Worker 2 is alive
-[2025-03-24 17:14:02] Worker 1 is alive
-[2025-03-24 17:14:02] Worker 3 is alive
-[2025-03-24 17:14:04] Worker 2 is alive
-[2025-03-24 17:14:07] Worker 1 is alive
-[2025-03-24 17:14:07] Worker 3 is alive
-[2025-03-24 17:14:09] Worker 2 is alive
-[2025-03-24 17:14:12] Worker 1 is alive
-[2025-03-24 17:14:12] Worker 3 is alive
-[2025-03-24 17:14:14] Worker 2 is alive
-[2025-03-24 17:14:17] Worker 1 is alive
-[2025-03-24 17:14:17] Worker 3 is alive
-[2025-03-24 17:14:19] Worker 2 is alive
-[2025-03-24 17:14:22] Worker 3 is alive
-[2025-03-24 17:14:24] Worker 2 is alive
-[2025-03-24 17:14:27] Worker 3 is alive
-[2025-03-24 17:14:29] Worker 2 is alive
-[2025-03-24 17:14:30] ERROR: Worker 1 is unresponsive! Reassigning tasks...
-[2025-03-24 17:14:30] Reassigning tasks from failed worker 1...
-[2025-03-24 17:14:30] Reassigning stuck task 629aa2d4-45b6-43f9-aef4-895660f7c1f2 from worker 1...
-[2025-03-24 17:14:30] Task 629aa2d4-45b6-43f9-aef4-895660f7c1f2 requeued successfully.
-[2025-03-24 17:14:32] Worker 3 is alive
-[2025-03-24 17:14:34] Worker 2 is alive
-[2025-03-24 17:14:37] Worker 3 is alive
-[2025-03-24 17:14:39] Worker 2 is alive
-[2025-03-24 17:14:42] Worker 3 is alive
-[2025-03-24 17:14:44] Worker 2 is alive
-[2025-03-24 17:14:47] Worker 3 is alive
-[2025-03-24 17:14:49] Worker 2 is alive
-[2025-03-24 17:14:52] Worker 3 is alive
-[2025-03-24 17:14:54] Worker 2 is alive
-[2025-03-24 17:14:58] Worker 3 is alive
-[2025-03-24 17:14:59] Worker 2 is alive
-[2025-03-24 17:15:03] Worker 3 is alive
-[2025-03-24 17:15:05] Worker 2 is alive
-[2025-03-24 17:15:08] Worker 3 is alive
-[2025-03-24 17:15:10] Worker 2 is alive
-[2025-03-24 17:15:13] Worker 3 is alive
-[2025-03-24 17:15:15] Worker 2 is alive
-[2025-03-24 17:15:18] Worker 3 is alive
-[2025-03-24 17:15:20] Worker 2 is alive
-[2025-03-24 17:15:23] Worker 3 is alive
-[2025-03-24 17:15:25] Worker 2 is alive
-[2025-03-24 17:15:28] Worker 3 is alive
-[2025-03-24 17:15:30] Worker 2 is alive
-[2025-03-24 17:15:33] Worker 3 is alive
-[2025-03-24 17:15:35] Worker 2 is alive
-[2025-03-24 17:15:38] Worker 3 is alive
-[2025-03-24 17:15:40] Worker 2 is alive
-[2025-03-24 17:15:43] Worker 3 is alive
-[2025-03-24 17:15:45] Worker 2 is alive
-[2025-03-25 18:21:15] Worker 1 is alive
-[2025-03-25 18:21:16] Worker 3 is alive
-[2025-03-25 18:21:17] Worker 1 is alive
-[2025-03-25 18:21:20] Worker 1 is alive
-[2025-03-25 18:21:21] Worker 3 is alive
-[2025-03-25 18:21:22] Worker 1 is alive
-[2025-03-25 18:21:25] Worker 1 is alive
-[2025-03-25 18:21:26] Worker 3 is alive
-[2025-03-25 18:21:27] Worker 1 is alive
-[2025-03-25 18:21:30] Worker 1 is alive
-[2025-03-25 18:21:31] Worker 3 is alive
-[2025-03-25 18:21:32] Worker 1 is alive
-[2025-03-25 18:21:36] Worker 3 is alive
-[2025-03-25 18:21:37] Worker 1 is alive
-[2025-03-25 18:21:42] Worker 3 is alive
-[2025-03-25 18:21:42] Worker 1 is alive
-[2025-03-25 18:21:47] Worker 3 is alive
-[2025-03-25 18:21:47] Worker 1 is alive
-[2025-03-25 18:21:52] Worker 3 is alive
-[2025-03-25 18:21:52] Worker 1 is alive
-[2025-03-25 18:21:57] Worker 3 is alive
-[2025-03-25 18:21:57] Worker 1 is alive
-[2025-03-25 18:22:02] Worker 3 is alive
-[2025-03-25 18:22:03] Worker 1 is alive
-[2025-03-25 18:22:07] Worker 3 is alive
-[2025-03-25 18:22:08] Worker 1 is alive
-[2025-03-25 18:22:12] Worker 3 is alive
-[2025-03-25 18:22:13] Worker 1 is alive
-[2025-03-25 18:22:17] Worker 3 is alive
-[2025-03-25 18:22:18] Worker 1 is alive
-[2025-03-25 18:22:22] Worker 3 is alive
-[2025-03-25 18:22:23] Worker 1 is alive
-[2025-03-25 18:22:27] Worker 3 is alive
-[2025-03-25 18:22:28] Worker 1 is alive
-[2025-03-25 18:22:32] Worker 3 is alive
-[2025-03-25 18:22:33] Worker 1 is alive
-[2025-03-25 18:22:37] Worker 3 is alive
-[2025-03-25 18:22:38] Worker 1 is alive
-[2025-03-25 18:22:42] Worker 3 is alive
-[2025-03-25 18:22:43] Worker 1 is alive
-[2025-03-25 18:22:47] Worker 3 is alive
-[2025-03-25 18:22:48] Worker 1 is alive
-[2025-03-25 18:22:52] Worker 3 is alive
-[2025-03-25 18:22:53] Worker 1 is alive
-[2025-03-25 18:22:57] Worker 3 is alive
-[2025-03-25 18:22:58] Worker 1 is alive
-[2025-03-25 18:23:01] Worker 2 is alive
-[2025-03-25 18:23:02] Worker 3 is alive
-[2025-03-25 18:23:03] Worker 1 is alive
-[2025-03-25 18:23:06] Worker 2 is alive
-[2025-03-25 18:23:07] Worker 3 is alive
-[2025-03-25 18:23:08] Worker 1 is alive
-[2025-03-25 18:23:11] Worker 2 is alive
-[2025-03-25 18:23:12] Worker 3 is alive
-[2025-03-25 18:23:13] Worker 1 is alive
-[2025-03-25 18:23:16] Worker 2 is alive
-[2025-03-25 18:23:18] Worker 3 is alive
-[2025-03-25 18:23:18] Worker 1 is alive
-[2025-03-25 18:23:21] Worker 2 is alive
-[2025-03-25 18:23:23] Worker 3 is alive
-[2025-03-25 18:23:23] Worker 1 is alive
-[2025-03-25 18:23:28] Worker 3 is alive
-[2025-03-25 18:23:28] Worker 1 is alive
-[2025-03-25 18:23:33] Worker 3 is alive
-[2025-03-25 18:23:33] Worker 1 is alive
-[2025-03-25 18:23:34] ERROR: Worker 2 is unresponsive! Reassigning tasks...
-[2025-03-25 18:23:34] Reassigning tasks from failed worker 2...
-[2025-03-25 18:23:34] Reassigning stuck task b9ce4f58-78de-489f-a893-bb4c6b8d7db0 from worker 2...
-[2025-03-25 18:23:34] Task b9ce4f58-78de-489f-a893-bb4c6b8d7db0 requeued successfully.
-[2025-03-25 18:23:38] Worker 3 is alive
-[2025-03-25 18:23:38] Worker 1 is alive
-[2025-03-25 18:23:43] Worker 3 is alive
-[2025-03-25 18:23:43] Worker 1 is alive
-[2025-03-25 18:23:48] Worker 3 is alive
-[2025-03-25 18:23:48] Worker 1 is alive
-[2025-03-25 18:23:53] Worker 3 is alive
-[2025-03-25 18:23:53] Worker 1 is alive
-[2025-03-25 18:23:58] Worker 1 is alive
-[2025-03-25 18:24:03] Worker 1 is alive
-[2025-03-25 18:24:04] ERROR: Worker 3 is unresponsive! Reassigning tasks...
-[2025-03-25 18:24:04] Reassigning tasks from failed worker 3...
-[2025-03-25 18:24:04] Reassigning stuck task b9ce4f58-78de-489f-a893-bb4c6b8d7db0 from worker 3...
-[2025-03-25 18:24:04] Task b9ce4f58-78de-489f-a893-bb4c6b8d7db0 requeued successfully.
-[2025-03-25 18:24:08] Worker 1 is alive
-[2025-03-25 18:24:13] Worker 1 is alive
-[2025-03-25 18:24:18] Worker 1 is alive
-[2025-03-25 18:24:23] Worker 1 is alive
-[2025-03-25 18:24:28] Worker 1 is alive
-[2025-03-25 18:24:33] Worker 1 is alive
-[2025-03-25 18:24:38] Worker 1 is alive
+[2025-03-25 18:39:25] Worker 1 is alive
+[2025-03-25 18:39:25] Worker 1 is alive
+[2025-03-25 18:39:25] Worker 2 is alive
+[2025-03-25 18:39:25] Worker 1 is alive
+[2025-03-25 18:39:25] Worker 3 is alive
+[2025-03-25 18:39:25] Worker 2 is alive
+[2025-03-25 18:39:25] Worker 1 is alive
+[2025-03-25 18:39:26] Worker 3 is alive
+[2025-03-25 18:39:28] Worker 2 is alive
+[2025-03-25 18:39:30] Worker 1 is alive
+[2025-03-25 18:39:31] Worker 3 is alive
+[2025-03-25 18:39:33] Worker 2 is alive
+[2025-03-25 18:39:35] Worker 1 is alive
+[2025-03-25 18:39:36] Worker 3 is alive | Processing Task 406bd3b7-e192-42d1-90e8-2c5183744e52: add [2, 2]
+[2025-03-25 18:39:38] Worker 2 is alive
+[2025-03-25 18:39:40] Worker 1 is alive
+[2025-03-25 18:39:41] Worker 3 is alive | Processing Task 406bd3b7-e192-42d1-90e8-2c5183744e52: add [2, 2]
+[2025-03-25 18:39:43] Worker 2 is alive
+[2025-03-25 18:39:45] Worker 1 is alive
+[2025-03-25 18:39:46] Worker 3 is alive | Processing Task 406bd3b7-e192-42d1-90e8-2c5183744e52: add [2, 2]
+[2025-03-25 18:39:48] Worker 2 is alive
+[2025-03-25 18:39:50] Worker 1 is alive
+[2025-03-25 18:39:53] Worker 2 is alive
+[2025-03-25 18:39:55] Worker 1 is alive
+[2025-03-25 18:39:58] Worker 2 is alive
+[2025-03-25 18:40:00] Worker 1 is alive | Processing Task b247f438-2c26-4b9a-bcbf-d652ed1330d1: sub [8, 8]
+[2025-03-25 18:40:00] ERROR: Worker 3 is unresponsive! Reassigning tasks...
+[2025-03-25 18:40:00] Reassigning tasks from failed worker 3...
+[2025-03-25 18:40:00] Reassigning stuck task 406bd3b7-e192-42d1-90e8-2c5183744e52 from worker 3...
+[2025-03-25 18:40:00] Task 406bd3b7-e192-42d1-90e8-2c5183744e52 requeued successfully.
+[2025-03-25 18:40:03] Worker 2 is alive
+[2025-03-25 18:40:05] Worker 1 is alive | Processing Task 406bd3b7-e192-42d1-90e8-2c5183744e52: add [2, 2]
+[2025-03-25 18:40:08] Worker 2 is alive
+[2025-03-25 18:40:10] Worker 1 is alive | Processing Task 406bd3b7-e192-42d1-90e8-2c5183744e52: add [2, 2]
+[2025-03-25 18:40:13] Worker 2 is alive
+[2025-03-25 18:40:15] Worker 1 is alive | Processing Task 406bd3b7-e192-42d1-90e8-2c5183744e52: add [2, 2]
+[2025-03-25 18:40:18] Worker 2 is alive
+[2025-03-25 18:40:20] Worker 1 is alive | Processing Task 406bd3b7-e192-42d1-90e8-2c5183744e52: add [2, 2]
+[2025-03-25 18:40:23] Worker 2 is alive
+[2025-03-25 18:40:25] Worker 1 is alive | Processing Task 406bd3b7-e192-42d1-90e8-2c5183744e52: add [2, 2]
+[2025-03-25 18:40:28] Worker 2 is alive | Processing Task b0856a82-2a73-4d95-b1ca-4494cfd980e0: mul [3, 3]
+[2025-03-25 18:40:30] Worker 1 is alive | Processing Task 406bd3b7-e192-42d1-90e8-2c5183744e52: add [2, 2]
+[2025-03-25 18:40:33] Worker 2 is alive
+[2025-03-25 18:40:35] Worker 1 is alive
+[2025-03-25 18:40:38] Worker 2 is alive
+[2025-03-25 18:40:40] Worker 1 is alive
+[2025-03-25 18:40:43] Worker 2 is alive | Processing Task 5ed7cd89-639e-409e-8590-23bcb7d07c73: add [8, 8]
+[2025-03-25 18:40:45] Worker 1 is alive
+[2025-03-25 18:40:48] Worker 2 is alive | Processing Task 5ed7cd89-639e-409e-8590-23bcb7d07c73: add [8, 8]
+[2025-03-25 18:40:50] Worker 1 is alive
+[2025-03-25 18:40:53] Worker 2 is alive | Processing Task 5ed7cd89-639e-409e-8590-23bcb7d07c73: add [8, 8]
+[2025-03-25 18:40:55] Worker 1 is alive
+[2025-03-25 18:40:58] Worker 2 is alive | Processing Task 5ed7cd89-639e-409e-8590-23bcb7d07c73: add [8, 8]
+[2025-03-25 18:41:00] Worker 1 is alive
+[2025-03-25 18:41:03] Worker 2 is alive | Processing Task 5ed7cd89-639e-409e-8590-23bcb7d07c73: add [8, 8]
+[2025-03-25 18:41:05] Worker 1 is alive
+[2025-03-25 18:41:09] Worker 2 is alive | Processing Task 5ed7cd89-639e-409e-8590-23bcb7d07c73: add [8, 8]
+[2025-03-25 18:41:10] Worker 1 is alive
+[2025-03-25 18:41:14] Worker 2 is alive
+[2025-03-25 18:41:15] Worker 1 is alive
+[2025-03-25 18:41:19] Worker 2 is alive
+[2025-03-25 18:41:20] Worker 1 is alive
