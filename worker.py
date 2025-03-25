@@ -48,7 +48,7 @@ class Worker:
     }))
         try:
             if task_type == "add":
-                time.sleep(60)
+                time.sleep(30)
                 result = sum(args)
                 self.redis_client.set(task_id, json.dumps({"status": "completed", "result": result, "worker": self.worker_id}))
                 print(f"[Worker {self.worker_id}] Task {task_id} completed. Result: {result}")
