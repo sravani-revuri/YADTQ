@@ -47,7 +47,7 @@ python3 worker.py --worker-id worker_2
 
 python3 worker.py --worker-id worker_3
 ```
-### **3. Starta client**
+### **3. Start a client**
 ```bash
 python3 client.py
 ```
@@ -55,7 +55,7 @@ python3 client.py
 
 Continue to choose the options of submitting a task or checking status as you wish!
 
-The heartbeats.log file periodically updates worker hearbeats and logs error is worker is unresponsive and task re-assignment messages.
+The heartbeats.log file periodically updates worker hearbeats and logs error if worker is unresponsive with task re-assignment messages.
 
 The worker.log file logs task details
 
