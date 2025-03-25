@@ -32,9 +32,12 @@ YADTQ enables task submission, processing, and tracking with periodic worker hea
 Ensure Kafka and Redis servers are running.
 
 ### **2. Create Topics**
+```bash
 kafka-topics.sh --create --topic task_queue --bootstrap-server localhost:9092 --partitions 3 --replication-factor 1
 
 kafka-topics.sh --create --topic heartbeat_queue --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+```
+
 
 ### **2. Start 3 Workers on separate terminals**
 ```bash
