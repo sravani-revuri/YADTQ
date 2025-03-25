@@ -3,7 +3,7 @@
 **YADTQ** is a distributed task queue system using **Kafka** and **Redis** to manage and process tasks efficiently.
 
 ## **Features**
-YADTQ enables task submission, processing, and tracking with periodic worker heartbea
+YADTQ enables task submission, processing, and tracking with periodic worker heartbeats and task logging for monitoring and auditing.
 
 ## **Components**
 ### **1. Client (`client.py`)**
